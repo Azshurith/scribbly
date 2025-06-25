@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">Scribbly</a>
+            <div class="ms-auto">
+                <div th:if="${#authorization.expression('isAuthenticated()')}">
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <span class="me-2">Welcome, <b th:text="${#authentication.name}">user</b></span>
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
+                    </form>
+                </div>
+                <div th:unless="${#authorization.expression('isAuthenticated()')}">
+                    <a th:href="@{/login}" class="btn btn-sm btn-outline-primary me-2">Login</a>
+                    <a th:href="@{/register}" class="btn btn-sm btn-primary">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</html>

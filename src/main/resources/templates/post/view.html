@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head::head(${post.title})"></head>
+    <body class="bg-light">
+        <div th:replace="fragments/header::header"></div>
+
+        <div class="container py-4">
+            <div class="mb-4">
+                <a th:href="@{/post/list}" class="btn btn-link">← Back to Posts</a>
+            </div>
+
+            <h1 class="mb-3" th:text="${post.title}">Post Title</h1>
+
+            <p class="fs-5" th:text="${post.content}">Post content goes here...</p>
+
+            <p class="text-muted">
+                Posted on <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">date</span>
+            </p>
+
+            <div th:if="${#authentication.name == post.user.username}">
+                <a th:href="@{/post/form/{id}(id=${post.id})}" class="btn btn-outline-secondary mt-3 me-2">Edit Post</a>
+                <form th:action="@{/post/delete/{id}(id=${post.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-outline-danger mt-3">Delete Post</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

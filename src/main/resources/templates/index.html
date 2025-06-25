@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head::head('Welcome - Scribbly')"></head>
+    <body class="bg-light">
+        <div th:replace="fragments/header::header"></div>
+
+        <div class="container py-5 text-center">
+            <h1 class="display-4 mb-4">Welcome to Scribbly</h1>
+            <p class="lead mb-5">Your simple and elegant place to share thoughts, stories, and ideas.</p>
+
+            <div>
+                <a th:href="@{/post/list}" class="btn btn-primary btn-lg me-2">Browse Posts</a>
+                <a th:href="@{/register}" class="btn btn-outline-secondary btn-lg">Get Started</a>
+            </div>
+        </div>
+
+    </body>
+</html>
