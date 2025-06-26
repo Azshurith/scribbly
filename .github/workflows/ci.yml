@@ -1,26 +1,35 @@
-name: CI
+name: Java CI with Gradle
 
 on:
   push:
-    branches: [main]
+    branches: [ master ]
   pull_request:
+    branches: [ master ]
 
 jobs:
-  test:
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
 
-      - name: Build and Test with Maven
-        run: ./mvnw clean verify
+    - name: Grant execute permission for Gradle wrapper
+      run: chmod +x ./gradlew
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # or not needed for public repos
+    - name: Build with Gradle
+      run: ./gradlew clean build
+
+    - name: Run tests with coverage
+      run: ./gradlew jacocoTestReport
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
