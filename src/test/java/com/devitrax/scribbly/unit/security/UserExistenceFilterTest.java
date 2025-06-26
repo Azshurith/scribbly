@@ -106,4 +106,33 @@ class UserExistenceFilterTest {
 
         verify(chain, times(1)).doFilter(request, response);
     }
+
+    @Test
+    void shouldAllowStaticResourcePath() throws Exception {
+        when(request.getRequestURI()).thenReturn("/css/style.css");
+
+        filter.doFilter(request, response, chain);
+
+        verify(chain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    void shouldRedirectWhenUserDoesNotExistAndSessionIsNull() throws Exception {
+        when(request.getRequestURI()).thenReturn("/post/list");
+        when(userRepo.findByUsername("john")).thenReturn(Optional.empty());
+        when(request.getSession(false)).thenReturn(null);
+
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+            "john", "password", List.of(new SimpleGrantedAuthority("ROLE_USER"))
+        );
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        filter.doFilter(request, response, chain);
+
+        verify(request).getSession(false);
+        verify(response).sendRedirect("/login?forceLogout=true");
+        verify(chain, never()).doFilter(any(), any());
+    }
+
+
 }
