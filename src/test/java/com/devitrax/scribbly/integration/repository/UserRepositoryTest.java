@@ -10,6 +10,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,14 +30,14 @@ class UserRepositoryTest {
     @Test
     void shouldSaveAndFindUserByUsername() {
         User user = new User();
-        user.setUsername("sampleUser");
+        user.setUsername("user_" + UUID.randomUUID());
         user.setPassword("samplePass");
         userRepository.save(user);
 
-        Optional<User> result = userRepository.findByUsername("sampleUser");
+        Optional<User> result = userRepository.findByUsername(user.getUsername());
 
         assertThat(result).isPresent();
-        assertThat(result.get().getUsername()).isEqualTo("sampleUser");
+        assertThat(result.get().getUsername()).isEqualTo(user.getUsername());
     }
 
     @Test
@@ -49,11 +50,11 @@ class UserRepositoryTest {
     @Test
     void shouldCheckIfUsernameIsUnique() {
         User user = new User();
-        user.setUsername("uniqueUser");
+        user.setUsername("user_" + UUID.randomUUID());
         user.setPassword("test123");
         userRepository.save(user);
 
-        boolean exists = userRepository.findByUsername("uniqueUser").isPresent();
+        boolean exists = userRepository.findByUsername(user.getUsername()).isPresent();
         boolean notExists = userRepository.findByUsername("anotherUser").isPresent();
 
         assertThat(exists).isTrue();
