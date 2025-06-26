@@ -4,8 +4,6 @@ import com.devitrax.scribbly.model.User;
 import com.devitrax.scribbly.repository.UserRepository;
 import com.devitrax.scribbly.security.UserExistenceFilter;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -15,10 +13,8 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import java.util.List;
 import java.util.Optional;
-
 import static org.mockito.Mockito.*;
 
 class UserExistenceFilterTest {
@@ -134,5 +130,32 @@ class UserExistenceFilterTest {
         verify(chain, never()).doFilter(any(), any());
     }
 
+    @Test
+    void shouldAllowRegisterPath() throws Exception {
+        when(request.getRequestURI()).thenReturn("/register");
+        filter.doFilter(request, response, chain);
+        verify(chain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    void shouldAllowCssPath() throws Exception {
+        when(request.getRequestURI()).thenReturn("/css/style.css");
+        filter.doFilter(request, response, chain);
+        verify(chain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    void shouldAllowJsPath() throws Exception {
+        when(request.getRequestURI()).thenReturn("/js/app.js");
+        filter.doFilter(request, response, chain);
+        verify(chain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    void shouldAllowImagesPath() throws Exception {
+        when(request.getRequestURI()).thenReturn("/images/logo.png");
+        filter.doFilter(request, response, chain);
+        verify(chain, times(1)).doFilter(request, response);
+    }
 
 }
