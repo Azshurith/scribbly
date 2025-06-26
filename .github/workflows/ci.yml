@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build and Test with Maven
-        run: ./mvnw clean verify
+        run: ./gradlew clean verify
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
