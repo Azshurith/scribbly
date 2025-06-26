@@ -31,11 +31,9 @@ public class Post {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     /** The user who authored the post. */
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
-
-    // Getters and Setters
 
     /**
      * Gets the post ID.

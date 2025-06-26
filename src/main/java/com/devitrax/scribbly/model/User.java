@@ -2,6 +2,9 @@ package com.devitrax.scribbly.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Entity representing a user in the Scribbly application.
  */
@@ -21,7 +24,8 @@ public class User {
     /** The user's encrypted password. */
     private String password;
 
-    // Getters and Setters
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
 
     /**
      * Gets the user's ID.
