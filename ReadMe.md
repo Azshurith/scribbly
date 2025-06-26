@@ -1,6 +1,10 @@
 # 📓 Scribbly
 
 [![codecov](https://codecov.io/gh/Azshurith/scribbly/branch/master/graph/badge.svg?token=9ZF8NWC2QB)](https://codecov.io/gh/Azshurith/scribbly)
+![License](https://img.shields.io/github/license/Azshurith/scribbly)
+![Java](https://img.shields.io/badge/Java-17+-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
+![Last Commit](https://img.shields.io/github/last-commit/Azshurith/scribbly)
 
 Scribbly is a simple and elegant blogging platform built with Spring Boot. It allows users to register, login, and create, edit, view, and delete blog posts with ease.
 
